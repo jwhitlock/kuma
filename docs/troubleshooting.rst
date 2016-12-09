@@ -74,11 +74,11 @@ It is usually easier to see and debug problems if you run MDN processes
 individually, instead of running them via ``foreman``. You can run each process
 exactly as it is listed in ``Procfile``
 
--  ``web`` - runs the Django development server
--  ``worker`` - runs the celery worker process for tasks
--  ``camera`` - stores a snapshot of celery tasks to display in admin site
--  ``kumascript`` - runs the node.js process for KumaScript macros
--  ``stylus`` - runs a process to compile all ``.styl`` changes into ``.css``
+-  ``web`` - runs the Django development server.
+-  ``worker`` - runs the celery worker process for tasks.
+-  ``camera`` - stores a snapshot of celery tasks to display in admin site.
+-  ``kumascript`` - runs the node.js process for KumaScript macros.
+-  ``stylus`` - runs a process to compile all ``.styl`` changes into ``.css``.
 
 An alternative is to run most processes via ``foreman``, and override one or
 more with a custom command. Open two sessions with ``vagrant ssh``. In the
@@ -108,13 +108,13 @@ Errors after switching branches
 
 -  If you see ``ImportError:`` errors, you may need to update your git
    submodules and/or clean out your ``*.pyc`` files to make sure python has all
-   the latest files it needs.::
+   the latest files it needs::
 
        git submodule update --init
        make clean
 
 -  If you see ``DatabaseError: (1146, "Table '...' doesn't exist")`` errors,
-   you probably need to run database migrations.::
+   you probably need to run database migrations::
 
        python manage.py migrate
 
@@ -152,9 +152,9 @@ Getting more help
 
 If you have more problems running Kuma, please:
 
-#. Paste errors to `pastebin`_
-#. Email the `dev-mdn`_ list
-#. After you email dev-mdn, you can also ask in `IRC`_
+#. Paste errors to `pastebin`_.
+#. Email the `dev-mdn`_ list.
+#. After you email dev-mdn, you can also ask in `IRC`_.
 
 .. _pastebin: https://pastebin.mozilla.org/
 .. _dev-mdn: https://lists.mozilla.org/listinfo/dev-mdn
