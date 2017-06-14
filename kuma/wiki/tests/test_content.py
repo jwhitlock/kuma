@@ -4,6 +4,7 @@ from urlparse import urljoin
 
 import bleach
 import pytest
+from constance.test import override_config
 from django.conf import settings
 from django.test import TestCase
 from jinja2 import escape, Markup
@@ -1084,6 +1085,7 @@ class AllowedHTMLTests(KumaTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
+@override_config(KUMASCRIPT_TIMEOUT=0)
 def test_extractor_css_classnames(root_doc, wiki_user):
     """The Extractor can return the CSS class names in use."""
     classes = ('foobar', 'barfoo', 'bazquux')
@@ -1100,6 +1102,7 @@ def test_extractor_css_classnames(root_doc, wiki_user):
     assert sorted(result) == sorted(classes)
 
 
+@override_config(KUMASCRIPT_TIMEOUT=0)
 def test_extractor_html_attributes(root_doc, wiki_user):
     """The Extractor can return the HTML attributes."""
     attributes = (

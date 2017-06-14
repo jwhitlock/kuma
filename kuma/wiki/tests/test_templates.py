@@ -1212,6 +1212,7 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         assert response.status_code == 405
         assert_no_cache_header(response)
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_preview(self):
         """Preview the wiki syntax content."""
         response = self.client.post(reverse('wiki.preview', locale='en-US'),

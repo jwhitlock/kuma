@@ -1,3 +1,4 @@
+from constance.test import override_config
 from django.conf import settings
 from elasticsearch_dsl.connections import connections
 
@@ -55,6 +56,7 @@ class TestIndexes(ElasticTestCase):
         ok_(index2.promoted)
         ok_(not index1.promoted)
 
+    @override_config(KUMASCRIPT_TIMEOUT=0)
     def test_outdated(self):
         # first create and populate an index
         main_index = Index.objects.create(name='first')
