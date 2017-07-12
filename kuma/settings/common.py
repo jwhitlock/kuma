@@ -609,37 +609,26 @@ STATICI18N_DOMAIN = 'javascript'
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 
-def pipeline_scss(output, sources):
+def pipeline_scss(output, sources, **kwargs):
     """Define a CSS file generated from multiple SCSS files."""
     definition = {
         'source_filenames': tuple('styles/%s.scss' % src for src in sources),
         'output_filename': 'build/styles/%s.css' % output
     }
+    definition.update(kwargs)
     return definition
 
 
-def pipeline_one_scss(slug):
+def pipeline_one_scss(slug, **kwargs):
     """Define a CSS file that shares the name with the one input SCSS."""
-    return pipeline_scss(slug, [slug])
+    return pipeline_scss(slug, [slug], **kwargs)
 
 
 PIPELINE_CSS = {
-    'mdn-blue': {
-        'source_filenames': (
-            'styles/font-awesome.scss',
-            'styles/main-blue.scss',
-        ),
-        'output_filename': 'build/styles/mdn-blue.css',
-        'variant': 'datauri',
-    },
-    'mdn': {
-        'source_filenames': (
-            'styles/font-awesome.scss',
-            'styles/main.scss',
-        ),
-        'output_filename': 'build/styles/mdn.css',
-        'variant': 'datauri',
-    },
+    'mdn-blue': pipeline_scss('mdn-blue', ['font-awesome', 'main-blue'],
+                              variant='datauri'),
+    'mdn': pipeline_scss('mdn', ['font-awesome', 'main'],
+                         variant='datauri'),
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -648,38 +637,11 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/jquery-ui.css',
     },
-    'gaia': {
-        'source_filenames': (
-            'styles/gaia.scss',
-        ),
-        'output_filename': 'build/styles/gaia.css',
-    },
-    'home-blue': {
-        'source_filenames': (
-            'styles/home-blue.scss',
-        ),
-        'output_filename': 'build/styles/home-blue.css',
-        'variant': 'datauri',
-    },
-    'home': {
-        'source_filenames': (
-            'styles/home.scss',
-        ),
-        'output_filename': 'build/styles/home.css',
-        'variant': 'datauri',
-    },
-    'search': {
-        'source_filenames': (
-            'styles/search.scss',
-        ),
-        'output_filename': 'build/styles/search.css',
-    },
-    'search-suggestions': {
-        'source_filenames': (
-            'styles/search-suggestions.scss',
-        ),
-        'output_filename': 'build/styles/search-suggestions.css',
-    },
+    'gaia': pipeline_one_scss('gaia'),
+    'home-blue': pipeline_one_scss('home-blue', variant='datauri'),
+    'home': pipeline_one_scss('home', variant='datauri'),
+    'search': pipeline_one_scss('search'),
+    'search-suggestions': pipeline_one_scss('search-suggestions'),
     'wiki-blue': {
         'source_filenames': (
             'styles/wiki-blue.scss',
@@ -710,153 +672,35 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/wiki.css',
     },
-    'wiki-revisions': {
-        'source_filenames': (
-            'styles/wiki-revisions.scss',
-        ),
-        'output_filename': 'build/styles/wiki-revisions.css',
-    },
-    'wiki-edit': {
-        'source_filenames': (
-            'styles/wiki-edit.scss',
-        ),
-        'output_filename': 'build/styles/wiki-edit.css',
-    },
-    'zone-addons': {
-        'source_filenames': (
-            'styles/zone-addons.scss',
-        ),
-        'output_filename': 'build/styles/zone-addons.css',
-    },
-    'zone-apps': {
-        'source_filenames': (
-            'styles/zone-apps.scss',
-        ),
-        'output_filename': 'build/styles/zone-apps.css',
-    },
-    'zone-archive': {
-        'source_filenames': (
-            'styles/zone-archive.scss',
-        ),
-        'output_filename': 'build/styles/zone-archive.css',
-    },
-    'zone-b2g': {
-        'source_filenames': (
-            'styles/zone-b2g.scss',
-        ),
-        'output_filename': 'build/styles/zone-b2g.css',
-    },
-    'zone-connect': {
-        'source_filenames': (
-            'styles/zone-connect.scss',
-        ),
-        'output_filename': 'build/styles/zone-connect.css',
-    },
-    'zone-firefox': {
-        'source_filenames': (
-            'styles/zone-firefox.scss',
-        ),
-        'output_filename': 'build/styles/zone-firefox.css',
-    },
-    'zone-games': {
-        'source_filenames': (
-            'styles/zone-games.scss',
-        ),
-        'output_filename': 'build/styles/zone-games.css',
-    },
-    'zone-learn': {
-        'source_filenames': (
-            'styles/zone-learn.scss',
-        ),
-        'output_filename': 'build/styles/zone-learn.css',
-    },
-    'zone-marketplace': {
-        'source_filenames': (
-            'styles/zone-marketplace.scss',
-        ),
-        'output_filename': 'build/styles/zone-marketplace.css',
-    },
-    'zone-ten': {
-        'source_filenames': (
-            'styles/zone-ten.scss',
-        ),
-        'output_filename': 'build/styles/zone-ten.css',
-    },
-    'zones': {
-        'source_filenames': (
-            'styles/zones.scss',
-        ),
-        'output_filename': 'build/styles/zones.css',
-    },
-    'sphinx': {
-        'source_filenames': (
-            'styles/wiki.scss',
-            'styles/sphinx.scss',
-        ),
-        'output_filename': 'build/styles/sphinx.css',
-    },
-    'users': {
-        'source_filenames': (
-            'styles/users.scss',
-        ),
-        'output_filename': 'build/styles/users.css',
-    },
+    'wiki-revisions': pipeline_one_scss('wiki-revisions'),
+    'wiki-edit': pipeline_one_scss('wiki-edit'),
+    'zone-addons': pipeline_one_scss('zone-addons'),
+    'zone-apps': pipeline_one_scss('zone-apps'),
+    'zone-archive': pipeline_one_scss('zone-archive'),
+    'zone-b2g': pipeline_one_scss('zone-b2g'),
+    'zone-connect': pipeline_one_scss('zone-connect'),
+    'zone-firefox': pipeline_one_scss('zone-firefox'),
+    'zone-games': pipeline_one_scss('zone-games'),
+    'zone-learn': pipeline_one_scss('zone-learn'),
+    'zone-marketplace': pipeline_one_scss('zone-marketplace'),
+    'zone-ten': pipeline_one_scss('zone-ten'),
+    'zones': pipeline_one_scss('zones'),
+    'sphinx': pipeline_scss('sphinx', ['wiki', 'sphinx']),
+    'users': pipeline_one_scss('users'),
     'tagit': {
         'source_filenames': (
             'styles/libs/jquery.tagit.css',
         ),
         'output_filename': 'build/styles/tagit.css',
     },
-    'promote': {
-        'source_filenames': (
-            'styles/promote.scss',
-        ),
-        'output_filename': 'build/styles/promote.css',
-    },
-    'error': {
-        'source_filenames': (
-            'styles/error.scss',
-        ),
-        'output_filename': 'build/styles/error.css',
-    },
-    'error-404': {
-        'source_filenames': (
-            'styles/error.scss',
-            'styles/error-404.scss',
-        ),
-        'output_filename': 'build/styles/error-404.css',
-    },
-    'dashboards': {
-        'source_filenames': (
-            'styles/dashboards.scss',
-            'styles/diff.scss',
-        ),
-        'output_filename': 'build/styles/dashboards.css',
-    },
-    'submission': {
-        'source_filenames': (
-            'styles/submission.scss',
-        ),
-        'output_filename': 'build/styles/submission.css',
-    },
-    'user-banned': {
-        'source_filenames': (
-            'styles/user-banned.scss',
-        ),
-        'output_filename': 'build/styles/user-banned.css',
-    },
-    'error-403-alternate': {
-        'source_filenames': (
-            'styles/error-403-alternate.scss',
-        ),
-        'output_filename': 'build/styles/error-403-alternate.css',
-    },
-    'fellowship': {
-        'source_filenames': (
-            'styles/fellowship.scss',
-        ),
-        'output_filename': 'build/styles/fellowship.css',
-    },
+    'promote': pipeline_one_scss('promote'),
+    'error': pipeline_one_scss('error'),
+    'error-404': pipeline_scss('error-404', ['error', 'error-404']),
+    'dashboards': pipeline_scss('dashboards', ['dashboards', 'diff']),
+    'submission': pipeline_one_scss('submission'),
+    'user-banned': pipeline_one_scss('user-banned'),
+    'error-403-alternate': pipeline_one_scss('error-403-alternate'),
+    'fellowship': pipeline_one_scss('fellowship'),
     'editor-content': {
         'source_filenames': (
             'styles/main.scss',
@@ -880,26 +724,11 @@ PIPELINE_CSS = {
         'template_name': 'pipeline/javascript-array.jinja',
     },
     # for maintenance mode page
-    'maintenance-mode': {
-        'source_filenames': (
-            'styles/maintenance-mode.scss',
-        ),
-        'output_filename': 'build/styles/maintenance-mode.css',
-    },
+    'maintenance-mode': pipeline_one_scss('maintenance-mode'),
     # global maintenance-mode-styles
-    'maintenance-mode-global': {
-        'source_filenames': (
-            'styles/maintenance-mode-global.scss',
-        ),
-        'output_filename': 'build/styles/maintenance-mode-global.css',
-    },
+    'maintenance-mode-global': pipeline_one_scss('maintenance-mode-global'),
     # embeded iframe for live samples
-    'samples': {
-        'source_filenames': (
-            'styles/samples.scss',
-        ),
-        'output_filename': 'build/styles/samples.css',
-    },
+    'samples': pipeline_one_scss('samples'),
     'locale-zh-CN': pipeline_one_scss('locales/zh-CN')
 }
 
