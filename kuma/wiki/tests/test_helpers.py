@@ -6,7 +6,7 @@ from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
 from pyquery import PyQuery as pq
 
-from kuma.core.cache import memcache
+from kuma.core.cache import redis
 from kuma.users.tests import UserTestCase
 
 from . import document, revision, WikiTestCase
@@ -142,7 +142,7 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
                              save=True)
         self.other_doc = other_rev.document
         self.other_doc.save()
-        memcache.clear()
+        redis.clear()
 
     def test_document_zone_links(self):
         admin = self.user_model.objects.filter(is_superuser=True)[0]

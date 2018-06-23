@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.test import RequestFactory
 
-from kuma.core.cache import memcache
+from kuma.core.cache import redis
 from kuma.users.tests import UserTestCase
 
 from . import document, revision, WikiTestCase
@@ -15,7 +15,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
         self.rf = RequestFactory()
-        memcache.clear()
+        redis.clear()
 
         self.zone_root = 'ExtraWiki'
         self.zone_root_content = 'This is the Zone Root'
@@ -163,7 +163,7 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(DocumentZoneWithLocaleTestCase, self).setUp()
-        memcache.clear()
+        redis.clear()
 
         root_rev = revision(title='Firefox', slug='Mozilla/Firefox',
                             is_approved=True, save=True)
