@@ -1,5 +1,7 @@
 #!/bin/bash -vx
-SCRIPT_FOLDER=$(dirname $0)
+
+# https://stackoverflow.com/a/246128/10612
+SCRIPT_FOLDER="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 if [[ "$SCRIPT_FOLDER" == "." ]]
 then
     SCRIPT_FOLDER=$PWD
