@@ -1,0 +1,17 @@
+#!/bin/bash
+SCRIPT_FOLDER=$(dirname $0)
+if [[ "$SCRIPT_FOLDER" == "." ]]
+then
+    SCRIPT_FOLDER=$PWD
+fi
+DOCKER_FOLDER=$(dirname $SCRIPT_FOLDER)
+BASE_FOLDER=$(dirname $(dirname $(dirname $DOCKER_FOLDER)))
+
+# Set in Docker Hub
+DOCKERFILE_PATH=${DOCKERFILE_PATH:-$DOCKER_FOLDER/Dockerfile}
+DOCKER_REPO=${DOCKER_REPO:-jwhitlock/kuma_base}
+CACHE_TAG=${CACHE_TAG:-test}
+IMAGE_NAME=${IMAGE_NAME:-$DOCKER_REPO:$CACHE_TAG}
+
+cd $BASE_FOLDER
+echo docker build -f $DOCKERFILE_PATH -t $IMAGE_NAME .
