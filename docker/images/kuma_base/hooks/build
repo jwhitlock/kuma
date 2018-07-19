@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -vx
 SCRIPT_FOLDER=$(dirname $0)
 if [[ "$SCRIPT_FOLDER" == "." ]]
 then
@@ -11,7 +11,7 @@ BASE_FOLDER=$(dirname $(dirname $(dirname $DOCKER_FOLDER)))
 DOCKERFILE_PATH=$DOCKER_FOLDER/Dockerfile
 
 # Set in Docker Hub
-DOCKER_REPO=${DOCKER_REPO:-jwhitlock/kuma_base}
+DOCKER_REPO=${DOCKER_REPO:-index.docker.io/jwhitlock/kuma_base}
 CACHE_TAG=${CACHE_TAG:-test}
 IMAGE_NAME=${IMAGE_NAME:-$DOCKER_REPO:$CACHE_TAG}
 
