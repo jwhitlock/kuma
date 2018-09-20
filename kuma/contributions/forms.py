@@ -50,7 +50,6 @@ class ContributionForm(forms.Form):
     donation_choices = forms.TypedChoiceField(
         required=False,
         choices=DONATION_CHOICES,
-        widget=forms.RadioSelect(),
         label=_('Contribution choices'),
         empty_value=0,
         coerce=int,
