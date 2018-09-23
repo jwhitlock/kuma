@@ -79,8 +79,13 @@ def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
     if sc_api_key and sc_site_id and app == 'kuma':
         response = deploy_speedcurve(sc_site_id, sc_api_key, revision,
                                      description)
+        in_progress = 'Deploy already in progress'
         if response.status_code == 200:
             success = 'SUCCESS'
+            count += 1
+        elif response.status_code == 403 and in_progress in response.content:
+            # Ignore this error
+            success = 'IN PROGRESS'
             count += 1
         else:
             success = 'FAILURE'
